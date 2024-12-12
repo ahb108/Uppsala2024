@@ -1,0 +1,227 @@
+quite("no")
+quit("no")
+2+2
+p
+test<-c(1,3,456,32,1,2,34,56,54,64)
+test
+class(test)
+test[2]
+length(test)
+double.test<-test*2
+test.ratio<-double.test/test
+id<-seq(1,10,1)#
+maxlength<-c(10,12,11,13,12,12,13,12.3,11,9.5)#
+maxwidth<-c(20,11,30,10,40,50,23,66,23,21)#
+material<-c("limestone","obsidian","obsidian","flint", #
+  "limestone", "limestone","obsidian","flint", "obsidian","obsidian")#
+tools<-data.frame(id,maxlength,maxwidth,material)#
+tools
+tools[,2]
+getwd()
+spearheads<-read.table(file="spearheads.csv", header=TRUE, sep=",")
+spearheads
+save.image("week1.RData")
+install.packages("rgdal", dependencies=TRUE)
+library(rgdal) #
+library(maptools)
+coast <- readOGR("coast/coast.shp")
+?readOGR
+coast <- readOGR(dsn="coast/coast.shp", layer="coast")
+coast
+plot(coast)
+plot(coast, col="grey75", border="red")
+save.image("week1.RData")
+q()
+summary(spearheads$upsoc)
+summary(spearheads)
+sd(spearheads$upsoc)
+IQR(spearheads$upsoc)
+sd(spearheads$mawit, na.rm=TRUE)
+hist(spearheads$socle)
+hist(spearheads$socle, breaks= seq(min(spearheads$socle,na.rm=TRUE)-1, max(spearheads$socle, na.rm=TRUE)+1,1))
+hist(spearheads$socle, breaks= seq(min(spearheads$socle,na.rm=TRUE)-1, max(spearheads$socle, na.rm=TRUE)+1,1),#
+  prob=TRUE)
+hist(spearheads$socle, breaks= seq(min(spearheads$socle,na.rm=TRUE)-1, max(spearheads$socle, na.rm=TRUE)+1,1),#
+  prob=TRUE)#
+\end{verbatim}#
+#
+Notice how the shape of the distribution remains unchanged, while the#
+y-axis now has smaller values indicating probabilities. We can also#
+add a density estimate line which will provide additional information#
+about the shape of the distribution:#
+#
+\begin{verbatim}#
+lines(density(spearheads$socle,na.rm=TRUE))
+dev.print(device=pdf, file="plot1.pdf")
+boxplot(spearheads$socle)
+socle.bronze <- subset(spearheads$socle,mat==c("Bronze"))
+socle.bronze <- spearheads$socle[spearheads$mat==c("Bronze")]
+socle.bronze
+spearheads
+socle.bronze <- spearheads$socle[spearheads$mat==c("Bronze")]#
+socle.iron <- spearheads$socle[spearheads$mat==c("Iron")]
+boxplot(socle.bronze,socle.iron)
+plot(ecdf(spearheads$socle), verticals=TRUE, do.points=FALSE)
+plot(ecdf(socle.bronze), verticals=TRUE, do.points=FALSE, #
+main="ECDF Bronze vs Iron: Length of socket")#
+lines(ecdf(socle.iron),verticals=TRUE, do.points=FALSE,#
+col.hor="red",col.ver="red")
+quit("no")
+setwd("~/Desktop/g117/week7")
+library(rgdal)#
+library(raster)#
+library(maptools)#
+library(spatstat)
+coins <- read.csv(file="ironage/coins.csv",header=TRUE)#
+coordinates(coins) <- ~X+Y#
+seuk <- readOGR(dsn="ironage/seuk", layer="seuk")
+coordinates(coins) <- ~x+y
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.5)
+mx <- mean(coordinates(coins)[,1]#
+my <- mean(coordinates(coins)[,2]
+mx <- mean(coordinates(coins)[,1])#
+my <- mean(coordinates(coins)[,2])
+mx
+?SpatialPoints
+mcentre <- SpatialPoints(c(mx,my))
+?SpatialPoints
+c(mx,my)
+vector(mx,my)
+vector(c(mx,my))
+class(c(mx,my))
+mcentre <- SpatialPoints(data.frame(X=mx,Y=my))
+mx <- mean(coordinates(coins)[,1])#
+my <- mean(coordinates(coins)[,2])#
+mcentre <- SpatialPoints(data.frame(X=mx,Y=my))#
+#
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+points(mcentre, pch=15, cex=0.5, col="saddlebrown")
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+points(mcentre, pch=15, cex=1, col="saddlebrown")
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+points(mcentre, pch=15, cex=1.5, col="saddlebrown")
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+points(mcentre, pch=15, cex=1, col="green")
+allc.ppp <- as.ppp(coordinates(coins),as.owin(seuk))
+allc <- as.ppp(coordinates(coins),as.owin(seuk))
+plot(allc)
+summary(coins)
+allc <- as.ppp(coordinates(coins),as.owin(seuk))#
+au <- as.ppp(coordinates(coins[coins$Mat=="Au", ]),as.owin(seuk))#
+agcu <- as.ppp(coordinates(coins[coins$Mat=="AgCu", ]),as.owin(seuk))
+Load in Iron Age data.#
+coins <- read.csv(file="ironage/coins.csv",header=TRUE)#
+coordinates(coins) <- ~x+y#
+seuk <- readOGR(dsn="ironage/seuk", layer="seuk")#
+#
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+#
+# You can see already that the distribution of coins of this perceived style, suggest something that might conceivably be a tribal territory. We can get the mean centre of this distribution by calculating the average x cordinate and average y coordinate of all findspots.#
+#
+mx <- mean(coordinates(coins)[,1])#
+my <- mean(coordinates(coins)[,2])#
+mcentre <- SpatialPoints(data.frame(X=mx,Y=my))#
+#
+# In fact that mean centre falls fairly close to a very large hillfort called Bagendon.#
+dev.new(device=pdf, height=4, width=4)#
+plot(seuk, col="grey75", border=NA)#
+points(coins, pch=19, cex=0.3)#
+points(mcentre, pch=15, cex=1, col="green")#
+#
+# We shall start analysing this dataset more fully, by converting it to spatstat objects and subsetting the coins by metal type.#
+allc <- as.ppp(coordinates(coins),as.owin(seuk))#
+au <- as.ppp(coordinates(coins[coins$Mat=="Au", ]),as.owin(seuk))#
+agcu <- as.ppp(coordinates(coins[coins$Mat=="AgCu", ]),as.owin(seuk))
+kfun1 <- envelope(allc, Kest, nsim=49)
+plot(kfun1)
+plot(allc)
+plot(coins, axes=T)
+?owin
+sq <- owin(xrange=c(350000,450000), yrange=c(150000,250000)
+)
+plot(sq)
+sqallc <- allc[(allc, sq)]
+sqallc <- allc[sq]
+plot(sqallc)
+plot(allc)#
+plot(sqallc, col="red", add=TRUE)
+plot(allc)#
+plot(sq, border="red", add=TRUE)#
+plot(sqallc, col="red", add=TRUE)
+sq <- owin(xrange=c(400000,500000), yrange=c(150000,250000))#
+sqallc <- allc[sq]#
+plot(allc)#
+plot(sq, border="red", add=TRUE)#
+plot(sqallc, col="red", add=TRUE)
+sq <- owin(xrange=c(375000,475000), yrange=c(150000,250000))#
+sqallc <- allc[sq]#
+plot(allc)#
+plot(sq, border="red", add=TRUE)#
+plot(sqallc, col="red", add=TRUE)
+kfun2 <- envelope(sqallc, Kest, nsim=49)#
+plot(kfun2)
+mallc <- allc#
+marks(mallc) <- as.factor(coins$Mat)
+plot(mallc)
+?enevelope
+?envelope
+mallc
+?enevelope
+?envelope
+bivkfun1 <- envelope(mallc, Kcross, i="AgCu", j="Au", nsim=49))
+bivkfun1 <- envelope(mallc, Kcross, i="AgCu", j="Au", nsim=49)
+plot(bivkfun1)
+dcdens <- density(allc, sigma=7500, edge=TRUE, eps=500)
+plot(dcdens)
+rrdD <- relrisk(mallc, sigma=7500, edge=TRUE, eps=500)#
+rrdD[as.matrix(dcdens)<(0.000000004)] <- NA
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=19, cex=0.4, col="orangered", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=0.6, add=TRUE)
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=1, cex=0.4, col="red", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=0.6, add=TRUE)
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=1, cex=0.4, col="darkred", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=0.6, add=TRUE)
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=1, cex=0.4, col="darkred", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=1, col="green", add=TRUE)
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=1, cex=0.4, col="darkred", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=1, col="darkgreen", add=TRUE)
+Now create a custom heatmap for the surface and plot it, with the gold and silver coins on top.#
+tc <- colourmap(rev(heat.colors(10)), breaks=c(seq(0,1,0.1)))#
+plot(seuk, col="grey65", border=NA)#
+plot(rrdD, col=tc, legend=FALSE, add=TRUE)#
+plot(au, pch=1, cex=0.4, col="darkred", add=TRUE)#
+plot(agcu, pch=22, cex=0.5, col="darkgreen", bg="cyan", lwd=0.5, add=TRUE)#
+plot(mcentre, pch=15, cex=1, col="black", add=TRUE)
+quit("no")
